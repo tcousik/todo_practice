@@ -17,6 +17,7 @@ export default class Form extends React.Component {
     this.props.addTodo({
       text: this.state.text,
       id: shortid.generate(),
+      complete: false,
     });
     this.setState({
       text: "",
