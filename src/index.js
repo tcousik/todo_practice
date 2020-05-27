@@ -75,7 +75,7 @@ export default class TodoList extends React.Component {
         ))}
         <div>
           Remaining Todos:{" "}
-          {this.state.todos.filter((todo) => !todo.complete).length}
+          {this.state.todos.some((todo) => !todo.complete).length}
         </div>
         <div>
           <button onClick={() => this.updateFilter("All")}>All</button>
