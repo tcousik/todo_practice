@@ -43,6 +43,12 @@ export default class TodoList extends React.Component {
     });
   };
 
+  deleteAllComplete = () => {
+    this.setState({
+      todos: this.state.todos.filter((todo) => !todo.complete),
+    });
+  };
+
   render() {
     let todos = [];
 
@@ -78,6 +84,13 @@ export default class TodoList extends React.Component {
             Complete
           </button>
         </div>
+        {this.state.todos.filter((todo) => todo.complete).length ? (
+          <div>
+            <button onClick={this.deleteAllComplete}>
+              Delete Completed Todos
+            </button>
+          </div>
+        ) : null}
       </div>
     );
   }
