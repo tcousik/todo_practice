@@ -1,96 +1,40 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Form from "./form";
-import Todo from "./todo";
-import "./index.css";
+
+const audioClips = [
+  {
+    label: "Major 3rd",
+    sound:
+      "https://dl.dropboxusercontent.com/s/6109vm1cre62toq/Major%203rd.mp3?dl=0",
+  },
+  {
+    label: "Minor 7th",
+    sound:
+      "https://dl.dropboxusercontent.com/s/m3a2fpz8f3a2qt3/Minor%207th.mp3?dl=0",
+  },
+];
 
 export default class TodoList extends React.Component {
-  state = {
-    todos: [],
-    filter: "All",
+  soundPlay = (src) => {
+    const sound = new Audio(src);
+    sound.play();
   };
 
-  addTodo = (todo) => {
-    this.setState({
-      todos: [todo, ...this.state.todos],
-    });
-  };
-
-  toggleComplete = (id) => {
-    this.setState({
-      todos: this.state.todos.map((todo) => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            complete: !todo.complete,
-          };
-        } else {
-          return todo;
-        }
-      }),
-    });
-  };
-
-  updateFilter = (string) => {
-    this.setState({
-      filter: string,
-    });
-  };
-
-  deleteTodo = (id) => {
-    this.setState({
-      todos: this.state.todos.filter((todo) => todo.id !== id),
-    });
-  };
-
-  deleteAllComplete = () => {
-    this.setState({
-      todos: this.state.todos.filter((todo) => !todo.complete),
+  renderSound = () => {
+    return audioClips.map((audioClips, index) => {
+      return (
+        <button key={index} onClick={() => this.soundPlay(audioClips.sound)}>
+          {audioClips.label}
+        </button>
+      );
     });
   };
 
   render() {
-    let todos = [];
-
-    if (this.state.filter === "All") {
-      todos = this.state.todos;
-    } else if (this.state.filter === "Active") {
-      todos = this.state.todos.filter((todo) => !todo.complete);
-    } else if (this.state.filter === "Complete") {
-      todos = this.state.todos.filter((todo) => todo.complete);
-    } else {
-      return null;
-    }
-
     return (
-      <div className="App">
-        <Form addTodo={this.addTodo} />
-        {todos.map((todo) => (
-          <Todo
-            key={todo.id}
-            todo={todo}
-            toggleComplete={() => this.toggleComplete(todo.id)}
-            deleteTodo={() => this.deleteTodo(todo.id)}
-          />
-        ))}
-        <div>
-          Remaining Todos:{" "}
-          {this.state.todos.some((todo) => !todo.complete).length}
-        </div>
-        <div>
-          <button onClick={() => this.updateFilter("All")}>All</button>
-          <button onClick={() => this.updateFilter("Active")}>Active</button>
-          <button onClick={() => this.updateFilter("Complete")}>
-            Complete
-          </button>
-        </div>
-        {this.state.todos.filter((todo) => todo.complete).length ? (
-          <div>
-            <button onClick={this.deleteAllComplete}>
-              Delete Completed Todos
-            </button>
-          </div>
-        ) : null}
+      <div>
+        <h2>yo</h2>
+        {this.renderSound()}
       </div>
     );
   }
